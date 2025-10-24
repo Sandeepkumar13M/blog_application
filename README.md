@@ -1,4 +1,14 @@
 The blog application is fully working
+- If you want to change the role ADMIN or AUTHOR  before registering, we have to change the role in "CustomUserDetailsService"
+  ```
+     user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("AUTHOR"); // Default role for new users, we can set as ADMIN also
+        return userRepository.save(user);
+    }
+  ```
+  - If you have a local PostgreSQL connection, you can connect in " application.properties "; if you have an online database connection that is also mentioned in   " application.properties "
+  - In this project, I used the Render database.
+  
 ## Project: Blog Application
 
 ### Part 1: CRUD
