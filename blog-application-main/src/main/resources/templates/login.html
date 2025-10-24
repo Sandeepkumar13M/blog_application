@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 30px;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h2 {
+            text-align: center;
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        div {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: black;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 6px;
+            font-size: 1em;
+            background-color: white;
+            color: black;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"], a.register-btn {
+            background-color: white;
+            color: black;
+            padding: 10px 25px;
+            font-size: 1em;
+            border: 1px solid black;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+        }
+
+        input[type="submit"]:hover, a.register-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+<h2>Login</h2>
+<form th:action="@{/login}" method="post">
+    <div>
+        <label for="username">Email:</label>
+        <input type="email" name="username" id="username" required="required"/>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required="required"/>
+    </div>
+    <div class="button-container">
+        <input type="submit" value="Login"/>
+        <a th:href="@{/register}" class="register-btn">Register</a>
+    </div>
+</form>
+</body>
+</html>

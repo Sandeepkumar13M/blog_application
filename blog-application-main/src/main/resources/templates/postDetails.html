@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${post.title}">Post Title</title>
+    <style>
+        body {
+            background-color: #fff;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            color: #000;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header-left a {
+            color: #000;
+            text-decoration: none;
+            font-size: 1.5em;
+        }
+
+        .header-right a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-right form, .header-right a {
+            margin-left: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #000;
+        }
+
+        .meta {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .content {
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .post-tags {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .actions {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .actions a {
+            margin: 0 10px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        h3 {
+            text-align: center;
+            color: #000;
+            margin-top: 30px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #000;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #000;
+            color: #000;
+            background-color: transparent;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            color: #000;
+            background-color: transparent;
+            border: 1px solid #000;
+            padding: 8px 15px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin: 5px 0;
+            color: #000;
+        }
+
+        .comment-buttons {
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        .comment-buttons a {
+            color: #000;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #000;
+            margin: 10px 0;
+        }
+
+        .main-container {
+            display: flex;
+        }
+
+        .left-section {
+            flex: 3;
+            padding-right: 20px;
+        }
+
+        .right-section {
+            flex: 1;
+            padding-left: 20px;
+            border-left: 1px solid #000;
+        }
+
+        .alert {
+            color: red;
+            border: 1px solid red;
+            padding: 10px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .create-new {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #000;
+            text-decoration: none;
+            border: 1px solid #000;
+            padding: 8px 15px;
+            background-color: transparent;
+        }
+
+        .no-posts {
+            margin-top: 20px;
+            color: #000;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .post-card {
+            border: 1px solid #000;
+            padding: 15px;
+            background-color: transparent;
+        }
+
+        .post-card h2 a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .post-card .meta {
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .post-card .excerpt {
+            color: #000;
+        }
+
+        .post-card .tags {
+            margin-top: 10px;
+            color: #000;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            color: #000;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #000;
+        }
+
+        .pagination a.active {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .right-section h2 {
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .right-section form {
+            margin-bottom: 20px;
+        }
+
+        .right-section input[type="text"],
+        .right-section input[type="datetime-local"],
+        .right-section select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #000;
+            background-color: transparent;
+            color: #000;
+        }
+
+        .right-section .author-filter {
+            margin-bottom: 15px;
+        }
+
+        .right-section .author-filter h3 {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .right-section .author-filter label {
+            display: block;
+            margin-bottom: 5px;
+            color: #000;
+        }
+        .edit{
+          color: #000;
+          text-decoration: none;
+          margin-left: 10px;
+          border: 1px solid #000; /* Box border like the Delete button */
+          padding: 8px 15px; /* Matching padding */
+          background-color: transparent; /* Transparent background */
+          display: inline-block; /* Ensures the link behaves like a button */
+          cursor: pointer; /* Pointer cursor for consistency */
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <header>
+        <div class="header-left">
+            <a th:href="@{/}">My Blog Application</a>
+        </div>
+        <div class="header-right">
+            <th:block sec:authorize="!isAuthenticated()">
+                <form th:action="@{/login}" method="get" style="display:inline">
+                    <button type="submit">Login</button>
+                </form>
+            </th:block>
+            <th:block sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post" style="display:inline">
+                    <button type="submit">Logout</button>
+                </form>
+            </th:block>
+        </div>
+    </header>
+
+    <h1 th:text="${post.title}">Post Title</h1>
+
+    <div class="meta">
+        <span><strong>Author:</strong> <span th:text="${post.author.name}">Author Name</span></span> |
+        <span><em
+                th:text="${#temporals.format(post.createdAt, 'dd MMM yyyy')} + ' at ' + ${#temporals.format(post.createdAt, 'HH:mm')}">Created Date</em></span>
+    </div>
+
+    <div class="content" th:text="${post.content}">Full content of the post here...</div>
+
+    <div class="post-tags" th:if="${post.postTags != null and !post.postTags.isEmpty()}">
+        <span th:each="tag : ${post.postTags}"
+              th:text="${tag.tag.name} + (${tagStat.last} ? '' : ', ')">
+        </span>
+    </div>
+
+    <!-- Show edit/delete buttons to post author or ADMIN -->
+    <div class="actions"
+         th:if="${#authentication.name == postAuthorEmail or #authorization.expression('hasRole(''ADMIN'')')}">
+        <a th:href="@{/post/{id}/edit(id=${post.id})}" class="edit">Edit</a>
+        <form th:action="@{/post/{id}/delete(id=${post.id})}"
+              method="post"
+              style="display: inline;">
+            <button type="submit"
+                    onclick="return confirm('Are you sure you want to delete this post?')">
+                Delete
+            </button>
+        </form>
+    </div>
+
+    <h3>Leave a Comment</h3>
+    <form th:object="${newComment}" th:action="@{/comment/new}" method="POST">
+        <input type="hidden" th:value="${post.id}" name="postId"/>
+        <input type="hidden" th:field="*{id}"/>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" placeholder="Your Name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" placeholder="Your Email" required>
+        <label for="comment">Comment:</label>
+        <textarea id="comment" th:field="*{comment}" placeholder="Your Comment" rows="4" required></textarea>
+        <button type="submit">Submit Comment</button>
+    </form>
+
+    <h3>Comments</h3>
+    <ul th:if="${!#lists.isEmpty(comments)}">
+        <li th:each="comment : ${comments}">
+            <p><strong th:text="${comment.name}">Commenter Name</strong></p>
+            <p th:text="${comment.comment}">Comment text here...</p>
+
+            <!-- Show edit/delete buttons to post author or ADMIN -->
+            <div class="comment-buttons"
+                 th:if="${#authentication.name == postAuthorEmail or #authorization.expression('hasRole(''ADMIN'')')}">
+                <a th:href="@{/comment/{id}/edit(id=${comment.id})}" class="edit">Edit</a>
+                <form th:action="@{/comment/{id}/delete(id=${comment.id})}" method="post" style="display:inline">
+                    <button type="submit" class="link-button"
+                            onclick="return confirm('Are you sure you want to delete this comment?')">
+                        Delete
+                    </button>
+                </form>
+            </div>
+            <hr>
+        </li>
+    </ul>
+</div>
+</body>
+
+</html>
